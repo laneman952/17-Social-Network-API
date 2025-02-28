@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const db = async (): Promise<typeof mongoose.connection> =>{
     try {
-        await mongoose.connect(ProcessingInstruction.env.MONGODB_URI || 'mongodb://');
+        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/social-network-api');
         return mongoose.connection;
     } catch(error) {
         console.error('Database connection error:', error);
