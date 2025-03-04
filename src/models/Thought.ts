@@ -1,29 +1,9 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+import reactionSchema from './Reaction';
 
-const reactionSchema = new Schema(
-    {
-        reactionId: Types.ObjectId,
-        default: () => new Types.ObjectId(),
-    },
-    reactionBody: {
-        type: String,
-        required: true,
-        maxlength: 280
-    },
-    username: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        get: (timestamp: Date) => new Date(timestamp).toLocaleString()
-    }
-    {
-        toJSON: { getters: true },
-        _id: false
-    }
-);
+// function dateFormat(timestamp: Date): string {
+//     return new Date(timestamp).toLocaleString();
+// }
 
 interface IThought extends Document {
     thoughtText: string,
@@ -42,7 +22,7 @@ const thoughtSchema = new Schema<IThought>({
     createdAt: {
         type: Date,
         default: Date.now,
-        // get: (timestamp: Date) => dateFormat(timestamp)
+        get: (timestamp: Date) => dateFormat(timestamp)
     },
 
     username: {
