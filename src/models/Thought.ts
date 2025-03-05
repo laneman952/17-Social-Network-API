@@ -1,13 +1,13 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, SchemaTypeOptions, get } from 'mongoose';
 import reactionSchema from './Reaction';
 
-// function dateFormat(timestamp: Date): string {
-//     return new Date(timestamp).toLocaleString();
-// }
+function dateFormat(timestamp: Date | null): string | undefined {
+    return timestamp ? new Date(timestamp).toLocaleString() : undefined;
+}
 
 interface IThought extends Document {
     thoughtText: string,
-    createdAt: Date,
+    createdAt: Date | string,
     username: string,
     reactions: [typeof reactionSchema]
 }
