@@ -15,11 +15,12 @@ export const getUserById = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ _id: req.params.userId });
     if (!user) {
-      res.status(404).json({ message: "No user found with this id!" });
-      return;
+      return res.status(404).json({ message: "No user found with this id!" });
     }
+    return res.json(user);
   } catch (error) {
     res.status(500).json({ message: "Error fetching user by userID", error });
+    return
   }
 };
 

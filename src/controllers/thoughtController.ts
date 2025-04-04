@@ -14,11 +14,12 @@ export const getThoughtById = async (req: Request, res: Response) => {
   try {
     const thought = await Thought.findOne({ _id: req.params.thoughtId });
     if (!thought) {
-      res.status(404).json({ message: "No thought found with this id!" });
-      return;
+      return res.status(404).json({ message: "No thought found with this id!" });
     }
+    return res.json(thought);
   } catch (error) {
     res.status(500).json({ message: "Error fetching thought by id", error });
+    return
   }
 };
 
@@ -76,15 +77,15 @@ export const deleteThought = async (req: Request, res: Response) => {
 
 export const addReaction = async (req: Request, res: Response) => {
   try {
-    const thoughts = await Thought.findOneAndUpdate(
+    const thought = await Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $push: { reactions: req.params.reactionId } },
+      { $push: { reactions: req.body } },
       { runValidators: true, new: true }
     );
-    if (!thoughts) {
+    if (!thought) {
       res.status(404).json({ message: "No thought found with this id!" });
     }
-    return res.json(thoughts);
+    return res.json(thought);
   } catch (error) {
     res.status(500).json({ message: "Error adding reaction", error });
     return
@@ -93,15 +94,15 @@ export const addReaction = async (req: Request, res: Response) => {
 
 export const removeReaction = async (req: Request, res: Response) => {
   try {
-    const thoughts = await Thought.findOneAndUpdate(
+    const thought = await Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { new: true }
     );
-    if (!thoughts) {
+    if (!thought) {
       res.status(404).json({ message: "No thought found with this id!" });
     }
-    return res.json(thoughts);
+    return res.json(thought);
   } catch (error) {
     res.status(500).json({ message: "Error removing reaction", error });
     return
