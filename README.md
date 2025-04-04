@@ -5,7 +5,7 @@
 
   
   ## Description
-  This project is creating a   
+  This project is creating an API for a social network web application where you can create, update, delete users, friends, thoughts, and reactions lists.   
 
 
   ## Table of Contents
